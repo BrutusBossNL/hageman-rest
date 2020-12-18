@@ -10,6 +10,7 @@ namespace Hageman\REST;
  */
 class API
 {
+    private const CONFIG_FILE = __DIR__ . '/config/api.php';
     private $url;
     private $validationErrors = [];
     protected $body = null;
@@ -24,10 +25,12 @@ class API
      * API constructor.
      *
      * On API initialisation the URL and necessary headers will be set with values from the .env file.
+     *
+     * @noinspection PhpIncludeInspection
      */
     function __construct()
     {
-        $api = require_once __DIR__ . '/config/api.php';
+        $api = require_once self::CONFIG_FILE;
         $this->url = $api['url'] ?? '';
         $this->addHeaders([
             'api-key' => $api['key'] ?? '',
@@ -38,6 +41,19 @@ class API
             'page' => 1,
             'pageSize' => 10
         ];
+    }
+
+    /**
+     * @param array $settings
+     */
+    public static function config(array $settings) :void
+    {
+        $contents = ['<?php', '', 'return ['];
+        foreach($settings as $k => $v) {
+            $contents[] = "\t'{$k}' => '{$v}',";
+        }
+        $contents[] = '];';
+        file_put_contents(self::CONFIG_FILE, implode(PHP_EOL, $contents));
     }
 
     /**
@@ -134,7 +150,7 @@ class API
      */
     protected function response()
     {
-//        if(!$this->validate()) return false;
+        if(!$this->validate()) return false;
 
         if($this->paging !== false) {
             $this->addParameters($this->paging);

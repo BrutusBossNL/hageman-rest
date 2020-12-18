@@ -3,6 +3,11 @@
 use Hageman\REST\Invoice;
 
 /**
+ * Autoloader
+ */
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+/**
  * Creating an invoice can be done in a few ways. Which are described below.
  * An invoice's entry value can be changed at any moment before the save() function is called.
  * The save() function has to be called to send the invoice towards the API.

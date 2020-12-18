@@ -3,6 +3,11 @@
 use Hageman\REST\Debtor;
 
 /**
+ * Autoloader
+ */
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+/**
  * The debtor class does not allow saving new debtors!
  * This is automatically done on invoice creation.
  *
