@@ -1,6 +1,6 @@
 {
     "name": "hageman/rest",
-    "description": "PHP class to communicate with the K.P. Hageman Fulfilment B.V. REST API",
+    "description": "PHP library to communicate with the K.P. Hageman Fulfilment B.V. REST API",
     "type": "library",
     "license": "MIT",
     "authors": [
