@@ -21,8 +21,14 @@ class Invoice extends Model
      */
     function __construct(array $data = [])
     {
+        /* Run the parent constructor */
         parent::__construct();
+
+        /* Create a new instance */
         $this->make($this::init(), $data);
+
+        /* Tell the class that an administration IS required for each request */
+        $this->administration = true;
     }
 
     /**

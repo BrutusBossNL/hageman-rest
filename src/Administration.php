@@ -3,16 +3,16 @@
 namespace Hageman\REST;
 
 /**
- * Class Debtor
+ * Class Administration
  * @package Hageman\REST
  *
  * This class is an extension of the Model class.
  * Used to handle requests specifically for the collection that matches the class name.
  */
-class Debtor extends Model
+class Administration extends Model
 {
-    private const SINGULAR = 'debtor';
-    private const MULTIPLE = 'debtors';
+    private const SINGULAR = 'administration';
+    private const MULTIPLE = 'administrations';
 
     /**
      * Administration constructor.
@@ -22,8 +22,8 @@ class Debtor extends Model
         /* Run the parent constructor */
         parent::__construct();
 
-        /* Tell the class that an administration IS required for each request */
-        $this->administration = true;
+        /* Tell the class that an administration IS NOT required for each request */
+        $this->administration = false;
     }
 
     /**
@@ -37,7 +37,7 @@ class Debtor extends Model
     }
 
     /**
-     * Get a list of debtors, allows filter and sort parameters
+     * Get a list of administration, allows filter and sort parameters
      *
      * @param array|null $filter
      * @param array|null $sort
@@ -57,19 +57,5 @@ class Debtor extends Model
     {
         $this->paging = false;
         return $this->get(self::MULTIPLE)->rows[0] ?? $this->get(self::MULTIPLE);
-    }
-
-    /**
-     * Get a specific debtor based on debtor number, or when null return the list function
-     *
-     * @param string|null $debtorNumber
-     * @return mixed
-     */
-    public function read(string $debtorNumber = null)
-    {
-        if(is_null($debtorNumber)) return $this->list();
-
-        $this->paging = false;
-        return $this->get(self::SINGULAR . '/' . $debtorNumber);
     }
 }

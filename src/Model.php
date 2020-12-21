@@ -17,6 +17,38 @@ class Model extends API implements JsonSerializable
     private $errors = [];
 
     /**
+     * Return all rows, or response if the rows entry is not available
+     *
+     * @param string $uri
+     * @return mixed
+     */
+    protected function getAll(string $uri)
+    {
+        ini_set('max_execution_time', -1);
+
+        $pageSize = 100;
+        $this->paging(1, $pageSize);
+
+        $response = $this->get($uri);
+        if(!isset($response->rows) || !isset($response->_lastPage)) return $response;
+
+        $collection = $response->rows;
+        $lastPage = $response->_lastPage;
+        if($lastPage > 2) {
+            for ($page = 2; $page <= $lastPage; $page++) {
+                $this->paging($page, $pageSize);
+
+                $response = $this->get($uri);
+                if(!isset($response->rows) || !isset($response->_lastPage)) return $response;
+
+                $collection = array_merge($collection, $response->rows);
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
      * @param string $key
      * @return mixed
      */
@@ -43,38 +75,6 @@ class Model extends API implements JsonSerializable
     public function __toString() :string
     {
         return json_encode($this->instance) ?? '';
-    }
-
-    /**
-     * Return all rows, or response if the rows entry is not available
-     *
-     * @param string $uri
-     * @return mixed
-     */
-    public function getAll(string $uri)
-    {
-        ini_set('max_execution_time', -1);
-
-        $pageSize = 100;
-        $this->paging(1, $pageSize);
-
-        $response = $this->get($uri);
-        if(!isset($response->rows) || !isset($response->_lastPage)) return $response;
-
-        $collection = $response->rows;
-        $lastPage = $response->_lastPage;
-        if($lastPage > 2) {
-            for ($page = 2; $page <= $lastPage; $page++) {
-                $this->paging($page, $pageSize);
-
-                $response = $this->get($uri);
-                if(!isset($response->rows) || !isset($response->_lastPage)) return $response;
-
-                $collection = array_merge($collection, $response->rows);
-            }
-        }
-
-        return $collection;
     }
 
     /**
