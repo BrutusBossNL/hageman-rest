@@ -1,9 +1,9 @@
 # Hageman REST API - PHP library
 A PHP library to communicate with the K.P. Hageman Fulfilment B.V. REST API.  
 
-![Packagist Version](https://img.shields.io/packagist/v/hageman/rest)
-![GitHub all releases](https://img.shields.io/github/downloads/BrutusBossNL/hageman-rest/total)
-
+[![Latest Stable Version](https://poser.pugx.org/hageman/rest/v)](//packagist.org/packages/hageman/rest)
+[![Total Downloads](https://poser.pugx.org/hageman/rest/downloads)](//packagist.org/packages/hageman/rest)
+[![License](https://poser.pugx.org/hageman/rest/license)](//packagist.org/packages/hageman/rest)
 
 ## Endpoints
 staging: https://staging-rest.hageman.nl:8181  
